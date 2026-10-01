@@ -8,10 +8,12 @@ from app.schemas.category import CategoryCreate, CategoryResponse
 router = APIRouter()
 
 @router.get("/", response_model=List[CategoryResponse])
+@router.get("", response_model=List[CategoryResponse], include_in_schema=False)
 def read_categories(db: Session = Depends(get_db)):
     return db.query(Category).all()
 
 @router.post("/", response_model=CategoryResponse)
+@router.post("", response_model=CategoryResponse, include_in_schema=False)
 def create_category(cat_in: CategoryCreate, db: Session = Depends(get_db)):
     db_cat = db.query(Category).filter(Category.name == cat_in.name).first()
     if db_cat:

@@ -9,10 +9,12 @@ from app.services import importer
 router = APIRouter()
 
 @router.get("/", response_model=List[SaleResponse])
+@router.get("", response_model=List[SaleResponse], include_in_schema=False)
 def read_sales(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     return crud_sale.get_sales(db, skip=skip, limit=limit)
 
 @router.post("/", response_model=SaleResponse)
+@router.post("", response_model=SaleResponse, include_in_schema=False)
 def create_sale(sale_in: SaleCreate, db: Session = Depends(get_db)):
     return crud_sale.create_sale(db, sale_in)
 

@@ -7,6 +7,7 @@ from app.services.alert_manager import AlertManager
 router = APIRouter()
 
 @router.get("/")
+@router.get("", include_in_schema=False)
 def get_alerts(db: Session = Depends(get_db)) -> List[Dict[str, Any]]:
     manager = AlertManager(db)
     return manager.synchronize_system_alerts()

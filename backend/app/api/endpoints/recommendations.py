@@ -7,6 +7,7 @@ from app.services.inventory_optimizer import InventoryOptimizer
 router = APIRouter()
 
 @router.get("/")
+@router.get("", include_in_schema=False)
 def get_recommendations(db: Session = Depends(get_db)) -> List[Dict[str, Any]]:
     optimizer = InventoryOptimizer(db)
     try:

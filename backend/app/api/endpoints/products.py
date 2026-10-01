@@ -8,6 +8,7 @@ from app.crud import product as crud_product
 router = APIRouter()
 
 @router.get("/", response_model=List[ProductResponse])
+@router.get("", response_model=List[ProductResponse], include_in_schema=False)
 def read_products(
     skip: int = 0,
     limit: int = 100,
@@ -25,6 +26,7 @@ def read_product(product_id: int, db: Session = Depends(get_db)):
     return product
 
 @router.post("/", response_model=ProductResponse)
+@router.post("", response_model=ProductResponse, include_in_schema=False)
 def create_product(product_in: ProductCreate, db: Session = Depends(get_db)):
     existing = crud_product.get_product_by_sku(db, product_in.sku)
     if existing:
